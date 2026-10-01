@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>RE:EARTH | The Pollution Problem</title>
+
+  <meta name="description"
+        content="An interactive guide to pollution, sustainability and the choices that can help protect our planet.">
+
+  <style>
+    /* =========================================================
+       RE:EARTH
+       A futuristic sustainability & pollution website
+       ========================================================= */
+
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #06110d;
+      --bg-light: #0a1913;
+      --card: rgba(255,255,255,0.055);
+
+      --green: #71f29a;
+      --green-dark: #1b9b55;
+      --blue: #54c7ff;
+      --yellow: #ffd86b;
+      --red: #ff7373;
+
+      --text: #f3fff7;
+      --muted: #9eb5a7;
+
+      --border: rgba(255,255,255,0.10);
+
+      --radius: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(48, 214, 115, 0.12), transparent 28%),
+        radial-gradient(circle at 10% 30%, rgba(84, 199, 255, 0.08), transparent 25%),
+        var(--bg);
+
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 18px 6%;
+
+      background: rgba(6,17,13,0.72);
+      backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--green);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+
+      padding: 140px 7% 80px;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 8px 14px;
+
+      border: 1px solid rgba(113,242,154,0.25);
+      border-radius: 50px;
+
+      background: rgba(113,242,154,0.06);
+
+      color: var(--green);
+      font-size: 0.85rem;
+      margin-bottom: 25px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      line-height: 0.88;
+      letter-spacing: -7px;
+
+      margin-bottom: 30px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero p {
+      max-width: 650px;
+
+      font-size: 1.2rem;
+      color: var(--muted);
+
+      margin-bottom: 35px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 22px;
+      border-radius: 50px;
+
+      text-decoration: none;
+      font-weight: 600;
+
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #041109;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(113,242,154,0.25);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ================= GLOWING EARTH ================= */
+
+    .earth {
+      position: absolute;
+
+      width: 500px;
+      height: 500px;
+
+      right: -130px;
+      bottom: -80px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(circle at 35% 30%,
+          #8cffb0 0%,
+          #2fa963 25%,
+          #0c5835 55%,
+          #03170d 75%);
+
+      box-shadow:
+        0 0 80px rgba(68,239,130,0.18),
+        inset -40px -30px 80px rgba(0,0,0,0.7);
+
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .earth::after {
+      content: "";
+
+      position: absolute;
+      inset: -25px;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(113,242,154,0.15);
+
+      box-shadow:
+        0 0 80px rgba(113,242,154,0.12);
+    }
+
+    @keyframes float {
+      0%,100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* ================= SECTIONS ================= */
+
+    section {
+      padding: 110px 7%;
+    }
+
+    .section-heading {
+      max-width: 750px;
+      margin-bottom: 55px;
+    }
+
+    .section-label {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: "Space Grotesk", sans-serif;
+
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+
+      line-height: 1;
+      letter-spacing: -3px;
+
+      margin-bottom: 18px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* ================= POLLUTION CARDS ================= */
+
+    .pollution-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .pollution-card {
+      min-height: 330px;
+
+      padding: 28px;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.025)
+      );
+
+      transition: 0.4s;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pollution-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(113,242,154,0.35);
+    }
+
+    .pollution-icon {
+      font-size: 2.8rem;
+      margin-bottom: 50px;
+    }
+
+    .pollution-card h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .pollution-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .number {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ================= STATISTICS ================= */
+
+    .stats {
+      background: var(--bg-light);
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 20px;
+    }
+
+    .stat-card {
+      padding: 35px;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      background: rgba(255,255,255,0.025);
+    }
+
+    .stat-number {
+      font-family: "Space Grotesk", sans-serif;
+
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+
+      color: var(--green);
+
+      letter-spacing: -4px;
+    }
+
+    .stat-card p {
+      color: var(--muted);
+    }
+
+    /* ================= IMPACT ================= */
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .impact-card {
+      padding: 35px;
+
+      border-radius: var(--radius);
+
+      border: 1px solid var(--border);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(113,242,154,0.07),
+          rgba(255,255,255,0.02)
+        );
+    }
+
+    .impact-card h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.7rem;
+      margin-bottom: 10px;
+    }
+
+    .impact-card p {
+      color: var(--muted);
+    }
+
+    /* ================= SOLUTIONS ================= */
+
+    .solutions {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 18px;
+    }
+
+    .solution {
+      padding: 30px;
+
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+
+      transition: 0.3s;
+    }
+
+    .solution:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-5px);
+    }
+
+    .solution span {
+      font-size: 2rem;
+    }
+
+    .solution h3 {
+      margin: 15px 0 8px;
+    }
+
+    .solution p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ================= CHALLENGE ================= */
+
+    .challenge {
+      background:
+        radial-gradient(circle at center,
+        rgba(113,242,154,0.10),
+        transparent 55%);
+    }
+
+    .challenge-box {
+      max-width: 900px;
+      margin: auto;
+
+      padding: 50px;
+
+      border-radius: 32px;
+
+      border: 1px solid rgba(113,242,154,0.2);
+
+      background: rgba(113,242,154,0.035);
+
+      text-align: center;
+    }
+
+    .challenge-box h2 {
+      margin-bottom: 15px;
+    }
+
+    .challenge-box > p {
+      color: var(--muted);
+      margin-bottom: 35px;
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+
+      text-align: left;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 15px;
+
+      border-radius: 14px;
+
+      background: rgba(255,255,255,0.04);
+
+      cursor: pointer;
+
+      transition: 0.3s;
+    }
+
+    .check-item:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .check-item input {
+      accent-color: var(--green);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      padding: 70px 7% 30px;
+
+      border-top: 1px solid var(--border);
+
+      text-align: center;
+    }
+
+    footer h2 {
+      font-size: clamp(2.5rem,6vw,5rem);
+      margin-bottom: 20px;
+    }
+
+    footer p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .footer-bottom {
+      margin-top: 60px;
+
+      padding-top: 20px;
+
+      border-top: 1px solid var(--border);
+
+      color: rgba(255,255,255,0.35);
+
+      font-size: 0.8rem;
+    }
+
+    /* ================= SCROLL ANIMATION ================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 950px) {
+
+      .pollution-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .solutions {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .earth {
+        opacity: 0.35;
+        width: 400px;
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      nav ul {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -4px;
+      }
+
+      section {
+        padding: 80px 5%;
+      }
+
+      .hero {
+        padding: 130px 5% 80px;
+      }
+
+      .pollution-grid,
+      .stats,
+      .impact-grid,
+      .solutions {
+        grid-template-columns: 1fr;
+      }
+
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .challenge-box {
+        padding: 30px 20px;
+      }
+
+      .earth {
+        width: 300px;
+        height: 300px;
+
+        right: -120px;
+        bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ================= NAVIGATION ================= -->
+
+  <nav>
+
+    <div class="logo">
+      RE<span>:</span>EARTH
+    </div>
+
+    <ul>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#solutions">Solutions</a></li>
+      <li><a href="#challenge">Challenge</a></li>
+    </ul>
+
+  </nav>
+
+
+  <!-- ================= HERO ================= -->
+
+  <header class="hero">
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        <span class="dot"></span>
+        OUR PLANET. OUR RESPONSIBILITY.
+      </div>
+
+      <h1>
+        THE AIR<br>
+        IS <span>NOT</span><br>
+        FREE.
+      </h1>
+
+      <p>
+        Pollution is more than dirty streets and smoky skies.
+        It affects the air we breathe, the water we drink,
+        the animals we share this planet with, and the future
+        we leave behind.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#problem" class="btn btn-primary">
+          Explore the problem ↓
+        </a>
+
+        <a href="#solutions" class="btn btn-secondary">
+          Find solutions
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="earth"></div>
+
+  </header>
+
+
+  <!-- ================= WHAT IS POLLUTION ================= -->
+
+  <section id="problem">
+
+    <div class="section-heading reveal">
+
+      <div class="section-label">
+        01 / THE PROBLEM
+      </div>
+
+      <h2>
+        Pollution comes in many forms.
+      </h2>
+
+      <p>
+        Pollution happens when harmful substances or energy
+        enter our environment and disturb the natural balance
+        of ecosystems.
+      </p>
+
+    </div>
+
+
+    <div class="pollution-grid">
+
+      <article class="pollution-card reveal">
+
+        <span class="number">01</span>
+
+        <div class="pollution-icon">🌫️</div>
+
+        <h3>Air Pollution</h3>
+
+        <p>
+          Harmful gases and tiny particles released by vehicles,
+          industries, burning fuels and other sources can make
+          the air unsafe to breathe.
+        </p>
+
+      </article>
+
+
+      <article class="pollution-card reveal">
+
+        <span class="number">02</span>
+
+        <div class="pollution-icon">💧</div>
+
+        <h3>Water Pollution</h3>
+
+        <p>
+          Chemicals, sewage, plastic and other waste can contaminate
+          rivers, lakes, oceans and groundwater.
+        </p>
+
+      </article>
+
+
+      <article class="pollution-card reveal">
+
+        <span class="number">03</span>
+
+        <div class="pollution-icon">🗑️</div>
+
+        <h3>Land Pollution</h3>
+
+        <p>
+          Excess waste, plastics and hazardous substances can
+          damage soil, ecosystems and the organisms that depend
+          on healthy land.
+        </p>
+
+      </article>
+
+
+      <article class="pollution-card reveal">
+
+        <span class="number">04</span>
+
+        <div class="pollution-icon">🔊</div>
+
+        <h3>Noise Pollution</h3>
+
+        <p>
+          Excessive or unwanted sound from traffic, construction
+          and machinery can affect people and wildlife.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= STATISTICS ================= -->
+
+  <section class="stats">
+
+    <div class="stat-card reveal">
+
+      <div class="stat-number">99%</div>
+
+      <p>
+        of the world's population was estimated by WHO to live
+        in places where air quality guidelines were not met
+        in 2019.
+      </p>
+
+    </div>
+
+
+    <div class="stat-card reveal">
+
+      <div class="stat-number">11M+</div>
+
+      <p>
+        tonnes of plastic are estimated to enter aquatic
+        ecosystems each year according to UNEP.
+      </p>
+
+    </div>
+
+
+    <div class="stat-card reveal">
+
+      <div class="stat-number">∞</div>
+
+      <p>
+        The long-term consequences of environmental pollution
+        can extend far beyond the moment the pollution is created.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= IMPACT ================= -->
+
+  <section id="impact">
+
+    <div class="section-heading reveal">
+
+      <div class="section-label">
+        02 / THE IMPACT
+      </div>
+
+      <h2>
+        Nothing lives in isolation.
+      </h2>
+
+      <p>
+        Environmental pollution can travel through ecosystems,
+        affecting people, animals, plants and entire communities.
+      </p>
+
+    </div>
+
+
+    <div class="impact-grid">
+
+      <div class="impact-card reveal">
+
+        <h3>🫁 Human Health</h3>
+
+        <p>
+          Air pollution can contribute to respiratory and
+          cardiovascular disease. Contaminated water and
+          hazardous chemicals can create additional health risks.
+        </p>
+
+      </div>
+
+
+      <div class="impact-card reveal">
+
+        <h3>🐦 Wildlife</h3>
+
+        <p>
+          Plastic, contaminated habitats, noise and polluted
+          water can interfere with feeding, breeding, migration
+          and survival.
+        </p>
+
+      </div>
+
+
+      <div class="impact-card reveal">
+
+        <h3>🌱 Ecosystems</h3>
+
+        <p>
+          Pollution can disrupt soil, freshwater and marine
+          ecosystems, reducing biodiversity and changing
+          ecological relationships.
+        </p>
+
+      </div>
+
+
+      <div class="impact-card reveal">
+
+        <h3>🌊 Oceans</h3>
+
+        <p>
+          Plastic waste and other pollutants can enter waterways
+          and eventually reach the ocean, where they can harm
+          marine organisms.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= SOLUTIONS ================= -->
+
+  <section id="solutions">
+
+    <div class="section-heading reveal">
+
+      <div class="section-label">
+        03 / THE RESPONSE
+      </div>
+
+      <h2>
+        Small actions scale.
+      </h2>
+
+      <p>
+        No single person can solve pollution. But millions of
+        everyday choices can change demand, habits and systems.
+      </p>
+
+    </div>
+
+
+    <div class="solutions">
+
+      <div class="solution reveal">
+
+        <span>♻️</span>
+
+        <h3>Reduce & Reuse</h3>
+
+        <p>
+          Buy only what you need and reuse products whenever
+          possible before sending them to the waste stream.
+        </p>
+
+      </div>
+
+
+      <div class="solution reveal">
+
+        <span>🚲</span>
+
+        <h3>Cleaner Transport</h3>
+
+        <p>
+          Walking, cycling, public transport and shared journeys
+          can reduce fuel use and emissions.
+        </p>
+
+      </div>
+
+
+      <div class="solution reveal">
+
+        <span>💡</span>
+
+        <h3>Save Energy</h3>
+
+        <p>
+          Turn off unused appliances and choose efficient
+          technology where practical.
+        </p>
+
+      </div>
+
+
+      <div class="solution reveal">
+
+        <span>💧</span>
+
+        <h3>Protect Water</h3>
+
+        <p>
+          Avoid wasting water and keep chemicals, oils and
+          waste away from drains and waterways.
+        </p>
+
+      </div>
+
+
+      <div class="solution reveal">
+
+        <span>🌳</span>
+
+        <h3>Protect Nature</h3>
+
+        <p>
+          Trees, wetlands, forests and other ecosystems provide
+          habitats and valuable environmental services.
+        </p>
+
+      </div>
+
+
+      <div class="solution reveal">
+
+        <span>🛍️</span>
+
+        <h3>Choose Wisely</h3>
+
+        <p>
+          Consider durability, packaging, repairability and
+          environmental impact when buying products.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= CHALLENGE ================= -->
+
+  <section id="challenge" class="challenge">
+
+    <div class="challenge-box reveal">
+
+      <div class="section-label">
+        04 / YOUR TURN
+      </div>
+
+      <h2>
+        The 7-Day Green Challenge
+      </h2>
+
+      <p>
+        Seven small actions. Seven days. One slightly
+        happier planet.
+      </p>
+
+
+      <div class="checklist">
+
+        <label class="check-item">
+          <input type="checkbox">
+          Carry a reusable water bottle
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Avoid single-use plastic
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Switch off unused lights
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Save water
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Pick up litter safely
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Reduce unnecessary paper use
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Spend time in nature
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          Share one sustainability idea
+        </label>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="section-label">
+      RE:EARTH
+    </div>
+
+    <h2>
+      There is no<br>
+      <span style="color:var(--green)">Planet B.</span>
+    </h2>
+
+    <p>
+      Sustainability isn't about perfection.
+      It's about making better choices, building better systems,
+      and remembering that the world we inherit is also the world
+      we leave behind.
+    </p>
+
+    <div class="footer-bottom">
+      Designed with 🌱 for a cleaner future · 2026
+    </div>
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /*
+      Reveal elements as the user scrolls.
+    */
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        entries.forEach(entry => {
+
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+
+        });
+
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+
+    document
+      .querySelectorAll(".reveal")
+      .forEach(element => observer.observe(element));
+
+
+    /*
+      Make completed challenge items feel satisfying.
+    */
+
+    document
+      .querySelectorAll(".check-item input")
+      .forEach(checkbox => {
+
+        checkbox.addEventListener("change", function() {
+
+          const item = this.parentElement;
+
+          if (this.checked) {
+            item.style.opacity = "0.55";
+            item.style.textDecoration = "line-through";
+          } else {
+            item.style.opacity = "1";
+            item.style.textDecoration = "none";
+          }
+
+        });
+
+      });
+
+  </script>
+
+</body>
+</html>
